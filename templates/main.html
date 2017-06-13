@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+	       <meta charset="utf-8">
+    	   <meta name="viewport" content="width=device-width,initial-scale=1">
+    	   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	   <title>Catalog App</title>
+    	   <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500" rel="stylesheet" type="text/css">
+    	   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='catalog.css') }}">
+    	   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='responsive.css') }}">
+
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <link rel=icon type=image/ico href="{{ url_for('static', filename='favicon.ico') }}">
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+            <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+	</head>
+	<body>
+
+            <header class="header">
+
+                <input type="button" id="relax" name="relax" class="relax" value="Relax" />
+                <input type="button" id="clear" name="clear" class="relax" value="Clear" hidden />
+
+
+                {% if category_name %}
+
+                <form action="{{ url_for('search', content=category_name) }}" method ="POST">
+                    <input type ="text" id="search-input" size="20" name="search_input" value="{{search_input}}" />
+                    <input id="search-button" type="submit" value="Search" />
+                </form>
+
+                {% elif menuItem %}
+
+                <form action="{{ url_for('search', content=menuItem.name) }}" method="POST">
+                    <input type ="text" id="search-input" size="20" name="search_input" value="{{search_input}}" />
+                    <input id="search-button" type="submit" value="Search" />
+                </form>
+
+                {% else %}
+
+                <form action="{{ url_for('search', content='noname') }}" method ="POST">
+                    <input type ="text" id="search-input" size="20" name="search_input" value="{{search_input}}" />
+                    <input id="search-button" type="submit" value="Search" />
+                </form>
+
+                {% endif %}
+
+
+                <div id="Banner" class="header__inner">
+
+                    {%if not email_user%}
+
+                        <a class="header__title" href="{{url_for('seccatalogMenu')}}">Catalog App</a>
+
+                        <a class="about__title" href="{{url_for('about')}}">About</a>
+
+                    {% else %}
+
+                        <a class="header__title" href="{{url_for('seccatalogMenu')}}">Catalog App</a>
+
+                        <a class="about__title" href="{{url_for('about')}}">About</a>
+
+                        {% if email_user == 'admin' %}
+                            <a class="user__title" href="{{url_for('allusers')}}">All Users</a>
+                        {% endif %}
+
+                    {% endif %}
+
+                    <div class="user_name">
+                        <p>{{email_user}}<p>
+                    </div>
+
+                    <div class="login_logout_button">
+
+                        {%if not email_user%}
+
+                            {%if not hideLogin%}
+                                <a class="button" href="{{url_for('showLogin')}}">Login &nbsp;</a>
+                            {% endif %}
+
+                            {%if not hideSignup%}
+                                <a class="button" href="{{url_for('signup')}}">SignUp</a>
+                            {% endif %}
+
+                        {% else %}
+                            <a class="button" href="{{url_for('disconnect')}}">Logout</a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </header>
+
+    <main>
+		<div class="container">
+			{% block content %}
+			{% endblock %}
+		</div>
+        <!--footer class="box">
+            <div id="social">
+                <a target="_blank" href="https://twitter.com/" class="zocial-twitter">Twitter</a>
+                <a target="_blank" href="https://www.facebook.com/" class="zocial-facebook">Facebook</a>
+                <a target="_blank" href="https://plus.google.com/" class="zocial-googleplus">Google+</a>
+                <a target="_blank" href="http://digg.com/" class="zocial-digg">Digg</a>
+            </div>
+        </footer-->
+    </main>
+
+
+
+    <script type="text/javascript">
+
+        function goBack() {
+            // Go back and refresh
+            window.history.back();
+            location.reload();
+        };
+
+        function getURL() {
+            var path = document.URL;
+            return console.log(path)
+        };
+
+        function dispImage() {
+
+            var image=document.getElementById('image_input').value;
+            document.getElementById('image_display').src=image;
+        };
+
+        // Display relax on the screen
+        document.getElementById("relax").addEventListener('click', function () {
+
+            var myParent = document.getElementById("Banner");
+            var myImage = document.createElement("img");
+
+            myImage.src = 'https://thecatapi.com/api/images/get?format=src&type=gif';
+            myParent.appendChild(myImage);
+            myImage.style.marginLeft = "160px";
+
+            document.getElementById("relax").style.visibility = "hidden";
+            document.getElementById("clear").removeAttribute("hidden");
+        });
+
+        // Clear off the relax
+        document.getElementById("clear").addEventListener('click', function () {
+            location.reload();
+        });
+
+        // Click on the search input
+        document.getElementById("search-input").addEventListener('click', function () {
+            document.getElementById("search-input").value = "";
+
+        });
+
+
+    </script>
+
+	</body>
+</html>

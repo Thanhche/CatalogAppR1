@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+
+	<h1>Category</h1>
+	<form action="{{ url_for('editCategory',category_name=category_name)}}" method='POST'>
+
+		Name: <input type='text' size='30' name='name' value="{{category_name}}"><br><br>
+        <p class="user-pass-error">{{Errors['name']}}</p>
+        <p class="user-pass-error">{{Errors['double']}}</p>
+
+		<input class="button" type='submit' value='Update'>
+        <input type="button" name="cancel_editcategory" onclick="goBack()" value="Cancel" />
+		<!--a class="button" href="{{url_for('seccategoryitemMenu', category_name=category_name)}}">Cancel</a-->
+	</form>
+
+</center>
+
+{% endblock %}

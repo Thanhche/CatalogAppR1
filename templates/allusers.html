@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% block content %}
+
+        <div class="category_box" align="center">
+
+            <div class="category_list">
+
+              <p class="category_title">All users</p>
+
+              <ul class="category_item">
+
+                {% for k in users %}
+
+                <li><a class="new_arrival_category" href='#'>{{k.name}}</a></li>
+                <li>id = {{k.id}}</li>
+                <li>picture = {{k.picture}}</li>
+
+                {% endfor %}
+
+                <br><br>
+
+                <li><input type="button" name="cancel_allusers" onclick="goBack()" value="Go back.." /></li>
+
+              </ul>
+
+            </div>
+
+        </div>
+
+{% endblock %}

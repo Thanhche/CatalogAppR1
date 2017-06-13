@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+	<h1> Edit Menu Item </h1>
+	<form action="{{ url_for('editMenuItem',category_name = category_name, item_name=item_name)}}" method='POST'>
+		<div>
+			<dl>Name:
+				<dt><input type='text' size="40" name='name' value="{{item.name }}"></dt>
+                <p class="user-pass-error">{{Errors['name']}}</p>
+                <p class="user-pass-error">{{Errors['name_length']}}</p>
+                <p class="user-pass-error">{{Errors['double']}}</p>
+            </dl>
+
+			<dl>Description:
+				<dt><textarea name='description' rows='5' cols='40'>{{item.description }}</textarea></dt>
+                <p class="user-pass-error">{{Errors['description']}}</p>
+                <p class="user-pass-error">{{Errors['description_length']}}</p>
+            </dl>
+
+			<dl>Price:
+				<dt><input type='text' size = '40' name='price' value={{item.price}}></dt>
+                <p class="user-pass-error">{{Errors['price']}}</p>
+            </dl>
+
+			<dl>Image:
+                <dt><textarea id="image_input" name='image' rows='5' cols='40' oninput="dispImage()">{{item.image }}</textarea></dt>
+            </dl>
+
+            <dd><img src="{{item.image }}" id="image_display" alt="image01" class="preview_pic" /></dd>
+
+
+    		<dl>Kind:
+        		<dd><input type="radio" name="kind" id="kind1" value="new" {%if item.kind =='new'%}checked{%endif%}>New</dd>
+        		<dd><input type="radio" name="kind" id="kind2" value="normal" {%if item.kind =='normal'%}checked{%endif%}>Normal</dd>
+        		<dd><input type="radio" name="kind" id="kind3" value="sale" {%if item.kind =='sale'%}checked{%endif%}>Sale</dd>
+            </dl>
+		</div>
+			<input class="button" type='submit' value='Update'>
+            <input type="button" name="cancel_editmenuitem" onclick="goBack()" value="Cancel" />
+            <br><br><br>
+	</form>
+</center>
+{% endblock %}

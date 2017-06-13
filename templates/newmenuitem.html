@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+    <h3>New Menu Item</h3>
+    <div class = 'pane'>
+        <form action="{{ url_for('newMenuItem', category_name=category_name)}}" method = 'POST'>
+
+            <dl>
+	             <dt>Name:</dt>
+		              <dd><input type='text' size='40' name='name' required></dd>
+                  <p class="user-pass-error">{{Errors['name']}}</p>
+
+	             <dt>Description:</dt>
+		              <dd><textarea name='description' rows='5' cols='40' required></textarea></dd>
+                  <p class="user-pass-error">{{Errors['description']}}</p>
+
+               <dt>Price: (Format: xxx.xx)</dt>
+                  <dd><input type='text' size='40' name='price' required /></dd>
+                  <p class="user-pass-error">{{Errors['price']}}</p>
+
+	             <dt>Image:  (Optional)</dt>
+                  <dd><textarea id="image_input" name ='image' rows='5' cols='40' oninput="dispImage()"></textarea></dd>
+                  <!--dd><input type="text" size='40' id="image_input" name='image' oninput="dispImage()" /></dd-->
+
+                  <dd><img src="" id="image_display" alt="image01" class="preview_pic" /></dd>
+
+               <dt>Kind:</dt>
+                  <dd><input type ='radio' name='kind' value='new' checked>New</dd>
+                  <dd><input type ='radio' name='kind' value='normal'>Normal</dd>
+                  <dd><input type ='radio' name='kind' value='sale'>Sale</dd>
+            </dl>
+
+            <input class="button" type='submit' value='Create'>
+
+            <input type="button" name="cancel_newmenuitem" onclick="goBack()" value="Cancel" />
+
+            <br><br>
+
+        </form>
+    </div>
+</center>
+{% endblock %}

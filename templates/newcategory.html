@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+
+    <form action="{{ url_for('newCategory', category_name=category_name)}}" method = 'POST'>
+
+        <h1>New Category</h1>
+
+        <dl>
+	           <dt>New Category Name:</dt>
+
+            <div class="space"></div>
+
+		        <dd><input type ='text' size='30' name='name' required></dd>
+                <p class="user-pass-error">{{Errors['name']}}</p>
+                <p class="user-pass-error">{{Errors['double']}}</p>
+
+            <div class="space"></div>
+
+            <input class='button' type='submit' value='Create'>
+
+            <input type='button' name='cancel_newcategory' onclick="goBack()" value='Cancel' />
+
+        </dl>
+
+    </form>
+
+</center>
+{% endblock %}

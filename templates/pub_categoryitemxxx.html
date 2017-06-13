@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+{% block content %}
+
+    <div class="main_body" align=center>
+
+        <div class="category_box">
+
+            <div class="category_list">
+
+              <p class="category_title">Categories</p>
+
+              <ul class="category_item">
+
+                {% for k in categories %}
+
+                <li><a class="new_arrival_category" href='{{url_for('categoryitemMenu',category_name = k.name)}}'>{{k.name}}</a></li>
+
+                {% endfor %}
+
+              </ul>
+
+            </div>
+
+        </div>
+
+        <div class="product_box">
+
+          <p class="product_title">{{category.name}}</p>
+
+          <div class="space"></div>
+
+          <div class="product_item">
+
+            {% for i in items %}
+
+            <div class="responsive">
+
+              <div class="item_image">
+
+                <a class="tooltip" href='{{url_for('describeMenuItem', category_name=category_name, item_name=i.name)}}'><img src="{{i.image}}" class="item_pic">
+                   <span class="tooltiptext">{{i.description}}</span>
+                </a>
+
+
+                <div class="item_name">{{i.name}}</div>
+
+                <div class="item_price">${{i.price}}</div>
+
+                <div class="space"></div>
+
+              </div>
+
+            </div>
+
+            {% endfor %}
+
+          </div>
+
+        </div>
+    </div>
+ {% endblock %}

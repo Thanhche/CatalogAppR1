@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+
+    <p class="category_title">{{menuItem.name}} - <span style="color: #e68a00">{{category.name}}</span></p>
+    <img class="img_in_descrition" src="{{menuItem.image}}" alt="{{menuItem.image}}">
+    <p class="category_title">${{menuItem.price}}</p>
+
+    <div class="description_item">
+        <p>{{menuItem.description}}</p>
+    </div>
+
+    <div class="space"></div>
+    <div class="space"></div>
+
+    <div>
+        <input type="button" name="goback" onclick="goBack()" value="Go back.." />
+    </div>
+    <br><br><br>
+
+</center>
+
+{% endblock %}

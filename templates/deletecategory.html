@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+{% block content %}
+
+<center>
+
+    <form action="{{ url_for('deleteCategory', category_name=category_name)}}" method = 'POST'>
+
+        <p>Are you sure to delete: {{category_name}}?</p>
+
+        <input class="button" type='submit' value='Delete'>
+
+        <!--a class="button" href="{{url_for('seccategoryitemMenu', category_name=category_name)}}">Cancel</a-->
+        <input type="button" name="cancel_delcategory" onclick="goBack()" value="Cancel" />
+
+    </form>
+
+</center>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- GOOGLE PLUS SIGN IN BUTTON-->
+
+    <div id="signInButton">
+      <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="984913628361-s5gcdgesht4fcspaoluqt50ueh1jh7q0.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+      </span>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+
+    function signInCallback(authResult) {
+
+    if (authResult['code']) {
+
+        // Hide the sign-in button now that the user is authorized
+        $('#signinButton').attr('style', 'display: none');
+        // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+
+        $.ajax({
+                type: 'POST',
+                url: '/gconnect?state={{STATE}}',
+                processData: false,
+                data: authResult['code'],
+                contentType: 'application/octet-stream; charset=utf-8',
+
+                success: function(result) {
+                        // Handle or verify the server response if necessary.
+                          if (result) {
+                              $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+                              setTimeout(function() {
+                              window.location.href = "/seccatalog";
+                              }, 4000);
+
+                          } else if (authResult['error']) {
+                            console.log('There was an error: ' + authResult['error']);
+
+                          } else {
+                            $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                            }
+                          }
+
+                }); } }
+
+    </script>
+
+<!--END GOOGLE PLUS SIGN IN -->
+
+
+<!--FACEBOOK SIGN IN -->
+<script>
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '230840404045612',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+
+  (function(d, s, id) {
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+
+function sendTokenToServer() {
+
+    var access_token = FB.getAuthResponse()['accessToken'];
+
+    console.log(access_token);
+    console.log('Welcome!  Fetching your information.... ');
+
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+
+     $.ajax({
+      type: 'POST',
+      url: '/fbconnect?state={{STATE}}',
+      processData: false,
+      data: access_token,
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/seccatalog";
+         }, 4000);
+
+      } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+
+  });
+    });
+}
+
+</script>
+
+      <button>
+        <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+		        <a href='javascript:sendTokenToServer()'>FB Login</a>
+	      </fb:login-button>
+      </button>
+<!--END FACEBOOK SIGN IN -->
+
+
+<main>
+<br><br><br>
+
+    <h2>LOG IN</h2>
+    <form action='{{url_for('manual_login')}}' method="post">
+
+      <center style="color: #ff6666;  font-size: 0.75em">Tips: You may login with Name:'admin' and Password: 'choxutimeo'</center>
+      <br>
+
+      <label class="usr-pass">Name/Email:</label><br>
+      <input class="usr-pass-input" type="text" name="manual_email" value="{{email}}"><br><br>
+
+      <label class="usr-pass">Password:</label><br>
+      <input class="usr-pass-input" type="password" name="password" value=""><br><br><br>
+
+      <input class="login-submit-btn" type="submit">
+      <button class="button" onclick="goBack()">Cancel</button>
+
+    </form>
+    <br><br>
+
+</main>
+
+{% endblock %}

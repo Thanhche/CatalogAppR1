@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block content %}
+
+    <main>
+        <h2>SIGN UP</h2>
+        <form method="post">
+            <label class="usr-pass">Create Name/Email:</label><br>
+            <input class="usr-pass-input" type="text" name="manual_email" value="{{email}}">
+            <p class="user-pass-error">{{Errors['name']}}</p>
+            <p class="user-pass-error">{{Errors['name_length']}}</p>
+
+            <label class="usr-pass">Password:</label><br>
+            <input class="usr-pass-input" type="password" name="password" value="">
+            <p class="user-pass-error">{{Errors['password']}}</p>
+            <p class="user-pass-error">{{Errors['password_length']}}</p>
+
+            <label class="usr-pass">Verify Password:</label><br>
+            <input class="usr-pass-input" type="password" name="verify" value="">
+
+            <p class="user-pass-error">{{Errors['verify_password']}}</p>
+
+            <input class="login-submit-btn" type="submit">
+            <button class="button" onclick="goBack()">Cancel</button>
+        </form>
+        <br><br><br><br><br><br><br><br>
+    </main>
+
+
+{% endblock %}

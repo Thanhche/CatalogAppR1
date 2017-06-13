@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% block content %}
+
+    <div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+
+            <ul>
+              {% for message in messages %}
+                <li> <strong> {{ message }} </strong> </li>
+              {% endfor %}
+            </ul>
+
+            {% endif %}
+          {% endwith %}
+    </div>
+
+    <div class="main_body" align=center>
+
+        <div class="category_box">
+
+            <div class="category_list">
+
+              <p class="category_title">Categories</p>
+
+              <ul class="category_item">
+
+                {% for k in categories %}
+
+                  <li><a class="new_arrival_category" href='{{url_for('categoryitemMenu',category_name = k.name)}}'>{{k.name}}</a></li>
+
+                {% endfor %}
+
+              </ul>
+
+            </div>
+
+        </div>
+
+        <div class="product_box">
+
+          <p class="product_title">New Arrival Items</p>
+
+            {% for i in items %}
+
+              <ul class="latest_item">
+                <li>
+
+		            {% for j in categories %}
+
+                   {% if j.id == i.category_id %}
+
+                      <div>
+
+                      <a class="item_name" href='{{url_for('describeMenuItem', category_name=j.name, item_name=i.name)}}'>{{i.name}}</a>
+                      - <a class="new_arrival_category" href='{{url_for('categoryitemMenu',category_name = j.name)}}'>{{j.name}}</a>
+
+                      </div>
+
+                   {% endif %}
+
+                {% endfor %}
+
+                </span>
+
+                </li>
+
+              </ul>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}
